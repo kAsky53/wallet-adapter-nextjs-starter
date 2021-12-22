@@ -28,9 +28,12 @@ export const SendBuyTransaction: FC = () => {
                 "buyPrice": 0.2,
                 "tokenSize": 1
             })
-            const transaction = Transaction.from(new Uint8Array(data.buff.data));
+
+            // deserialize transaction made from AH server
+            const transaction = Transaction.from(Buffer.from(data));
             console.log(transaction);
 
+            // sign off the transaction with connected wallet
             signature = await sendTransaction(transaction, connection);
             notify('info', 'Transaction sent:', signature);
 
